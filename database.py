@@ -1,10 +1,11 @@
 from typing import AsyncGenerator
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
-try:
-    from .config import settings  # type: ignore
-except ImportError:
-    from config import settings  # type: ignore
 from pymongo import MongoClient
+
+try:
+    from .config import settings
+except ImportError:
+    from config import settings
 
 _client: AsyncIOMotorClient | None = None
 _db: AsyncIOMotorDatabase | None = None
@@ -23,8 +24,9 @@ async def get_db() -> AsyncGenerator[AsyncIOMotorDatabase, None]:
     assert _db is not None
     yield _db
 
-# Synchronous client/collection for background tasks that use blocking PyMongo
+# Synchronous client for background tasks
 _sync_client: MongoClient | None = None
+
 def get_sync_client() -> MongoClient:
     global _sync_client
     if _sync_client is None:
