@@ -1,0 +1,14 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.5
+pydantic==2.9.2
+python-multipart
+cloudinary==1.41.0
+pymongo
+python-dotenv==1.0.1
+motor==3.6.0
+httpx==0.27.2
+google-generativeai
+opencv-python
+numpy
+Pillow
+requests
