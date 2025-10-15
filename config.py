@@ -1,12 +1,20 @@
 import os
-import os
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from pathlib import Path
 
-# Load .env from the same directory as this file (same level as main.py)
+# Load .env from the PROJECT ROOT (parent of this file's directory)
 CURRENT_DIR = Path(__file__).parent
-load_dotenv(dotenv_path=CURRENT_DIR / ".env", override=True)
+PARENT_DIR = CURRENT_DIR.parent
+ROOT_ENV = PARENT_DIR / ".env"
+LOCAL_ENV = CURRENT_DIR / ".env"
+
+# Load from root first
+if ROOT_ENV.exists():
+    load_dotenv(dotenv_path=ROOT_ENV, override=True)
+# Then load from local without overriding already-set values
+if LOCAL_ENV.exists():
+    load_dotenv(dotenv_path=LOCAL_ENV, override=True)
 
 class Settings(BaseModel):
     app_name: str = os.getenv("APP_NAME", "prescription-analyzer")
